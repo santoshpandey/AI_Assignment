@@ -1,0 +1,50 @@
+<!-- Search field start -->
+<form>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="glyphicon glyphicon-search"></i>
+      </div>
+      <input
+        type="text"
+        class="form-control"
+        name="searchString"
+        placeholder="Type 'title' to search the post..."
+        [(ngModel)]="searchString"
+      />
+    </div>
+  </div>
+</form>
+<!-- Search field end -->
+<!-- Post data Table start -->
+<table role="table" aria-label="Posts" aria-describedby="Post Data" class="table table-striped">
+  <thead role="rowgroup">
+    <tr role="rowheader">
+      <th role="columnheader">Title</th>
+      <th role="columnheader">URL</th>
+      <th role="columnheader">Created_at</th>
+      <th role="columnheader">Author</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+    <tr *ngFor="let post of  posts  | searchByTitle : 'title' : searchString; let i = index" role="row" (click)="showModal(post)">
+      <td>{{post.title}}</td>
+      <td>{{post.url}}</td>
+      <td>{{post.created_at | date:'fullDate'}}</td>
+      <td>{{post.author}}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- Post Table End -->
+<!-- modal container -->
+<ngx-smart-modal #postModal identifier="postModal">
+  <div *ngIf="postModal.hasData()">
+    <pre>{{ modalData | json }}</pre>
+  </div>
+</ngx-smart-modal>
+<!-- modal container -->
+<!-- Loader start -->
+<div id="loader-wrapper" *ngIf="showLoader">
+  <div id="loader"></div>
+</div>
+<!-- Loader end -->
